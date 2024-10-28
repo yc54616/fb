@@ -1,8 +1,9 @@
 #!/bin/bash
+loop=1;
 
 function dir(){
 	cnt=0
-	result=$(ls -R)
+	result=$( $workingD | ls -R )
 	for i in $result; do
 		if [[ "${i}" != ".:" ]]; then
 			echo -n "|"
@@ -17,19 +18,23 @@ function dir(){
 	done
 }
 
-
-loop=1;
+function pri(){
+	echo "----------------------------------------------------";
+        pwd 
+        echo "----------------------------------------------------";
+}
 
 while [ $loop ];
 do
-	echo "----------------------------------------------------";
-	pwd 
-	echo "----------------------------------------------------";
-	
+	pri;
+
 	read -p "$ " name;
 	
-	if [[ "$name" == "ls" ]]; then
+	if [[ "${name}" == "ls" ]]; then
 		dir . 1;
+	else
+		eval ${name}
 	fi
+	
 
 done
