@@ -1,0 +1,35 @@
+#!/bin/bash
+
+function dir(){
+	cnt=0
+	result=$(ls -R)
+	for i in $result; do
+		if [[ "${i}" != ".:" ]]; then
+			echo -n "|"
+			if [[ ${i:(-1)} == ":" ]]; then
+				cnt=$( echo \"${i}\" | grep -o / | wc -l )
+			fi
+			for (( j=1; j <= $cnt; j++)); do
+				echo -n "	|"
+			done
+			echo ${i} | sed -E "s/(.+\/)//" | sed "s/://" 
+		fi
+	done
+}
+
+
+loop=1;
+
+while [ $loop ];
+do
+	echo "----------------------------------------------------";
+	pwd 
+	echo "----------------------------------------------------";
+	
+	read -p "$ " name;
+	
+	if [[ "$name" == "ls" ]]; then
+		dir . 1;
+	fi
+
+done
